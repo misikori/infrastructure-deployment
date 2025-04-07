@@ -1,0 +1,49 @@
+---
+- name: Test the connection.
+  hosts: all
+  become: true
+  user: ansible-runner
+  gather_facts: false
+  tasks:
+    - wait_for_connection:
+
+    - setup:
+
+    - name: pinging
+      ping: 
+  
+- name: Install GitHub Actions Runner
+  hosts: all
+  gather_facts: false
+  user: ansible-runner
+  become: yes
+  vars:
+    github_account: "{{ lookup('env', 'GITHUB_ACCOUNT') }}"
+    github_repo: "{{ lookup('env', 'GITHUB_REPO') }}"
+    access_token: "{{ lookup('env', 'PERSONAL_ACCESS_TOKEN') }}"
+    runner_user: ansible-runner
+  roles:
+    - name: ansible-github_actions_runner
+
+- name: Install NodeJS 20
+  hosts: all
+  user: ansible-runner
+  become: true
+  gather_facts: false
+  roles:
+    - name: nodesource.node
+  vars:
+    nodejs_version: 20.x
+
+
+
+- name: Install gcloud SDK
+  hosts: all
+  user: ansible-runner
+  become: true
+  gather_facts: false
+  roles:
+    - name: google.cloud.gcloud
+  vars:
+    gcloud_update_path: true
+    gcloud_profile_path: true

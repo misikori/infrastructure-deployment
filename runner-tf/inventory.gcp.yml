@@ -1,0 +1,7 @@
+plugin: gcp_compute
+projects:
+  - thinking-text-455511-m7
+auth_kind: serviceaccount
+service_account_file: ~/Downloads/capstone-updated-service-acc.json
+filters:
+  - labels.ansible_target = true
