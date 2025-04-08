@@ -36,7 +36,7 @@
   vars:
     nodejs_version: 20.x
 
-- name: Install Git
+- name: Install necessary packages
   hosts: all
   user: ansible-runner
   become: true
@@ -45,6 +45,11 @@
     - name: Install git
       apt:
         name: git
+        state: present
+        update_cache: yes
+    - name: Install unzip
+      apt:
+        name: unzip
         state: present
         update_cache: yes
 
