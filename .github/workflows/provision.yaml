@@ -24,10 +24,6 @@ jobs:
         with:
           sparse-checkout: core-tf
       -
-        name: Change directory
-        run: cd core-tf/
-    
-      -
         name: Install terraform
         uses: hashicorp/setup-terraform@v3.1.2
         
@@ -35,15 +31,19 @@ jobs:
         name: Terraform Init
         id: init
         run: terraform init -input=false
+        working-directory: core-tf
       -
         name: Terraform Validate
         id: validate
         run: terraform validate -no-color
+        working-directory: core-tf
       -
         name: Terraform Plan
         id: plan
         run: terraform plan -no-color -input=false
+        working-directory: core-tf
       -
         name: Terraform Apply
         id: apply
         run: terraform apply -auto-approve
+        working-directory: core-tf
