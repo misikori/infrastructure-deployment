@@ -18,10 +18,11 @@
   user: ansible-runner
   become: yes
   vars:
-    github_account: "{{ lookup('env', 'GITHUB_ACCOUNT') }}"
-    github_repo: "{{ lookup('env', 'GITHUB_REPO') }}"
-    access_token: "{{ lookup('env', 'PERSONAL_ACCESS_TOKEN') }}"
+    github_account: "{{ lookup('env', 'GITHUB_ORG') }}"
+    # github_repo: "{{ lookup('env', 'GITHUB_REPO') }}"
+    access_token: "{{ lookup('env', 'ORG_ACCESS_TOKEN') }}"
     runner_user: ansible-runner
+    runner_org: true
   roles:
     - name: ansible-github_actions_runner
 
@@ -37,13 +38,13 @@
 
 
 
-- name: Install gcloud SDK
-  hosts: all
-  user: ansible-runner
-  become: true
-  gather_facts: false
-  roles:
-    - name: google.cloud.gcloud
-  vars:
-    gcloud_update_path: true
-    gcloud_profile_path: true
+# - name: Install gcloud SDK
+#   hosts: all
+#   user: ansible-runner
+#   become: true
+#   gather_facts: false
+#   roles:
+#     - name: google.cloud.gcloud
+#   vars:
+#     gcloud_update_path: true
+#     gcloud_profile_path: true
