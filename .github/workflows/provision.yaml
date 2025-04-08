@@ -16,12 +16,16 @@ jobs:
   
   setup-tf:
     runs-on: self-hosted
+    needs: [setup-gcli]
     steps:
       -
         name: Checkout the repo
         uses: actions/checkout@v4.2.2
         with:
           sparse-checkout: core-tf
+      -
+        name: Change directory
+        run: cd core-tf/
     
       -
         name: Install terraform
