@@ -36,7 +36,17 @@
   vars:
     nodejs_version: 20.x
 
-
+- name: Install Git
+  hosts: all
+  user: ansible-runner
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install git
+      apt:
+        name: git
+        state: present
+        update_cache: yes
 
 # - name: Install gcloud SDK
 #   hosts: all
