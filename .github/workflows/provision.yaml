@@ -39,6 +39,8 @@ jobs:
       -
         name: Install terraform
         uses: hashicorp/setup-terraform@v3.1.2
+        with:
+          terraform_wrapper: false
         
       -
         name: Terraform Init
