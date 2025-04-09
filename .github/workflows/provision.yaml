@@ -63,3 +63,9 @@ jobs:
         id: apply
         run: terraform apply -auto-approve
         working-directory: core-tf
+
+      -
+        name: Terraform Destroy
+        id: desstroy
+        run: terraform destroy -auto-approve
+        working-directory: core-tf
