@@ -14,7 +14,7 @@ jobs:
         name: 'Use gcloud CLI'
         run: 'gcloud info'
   
-  setup-tf:
+  checkout:
     runs-on: self-hosted
     needs: [setup-gcli]
     steps:
@@ -30,13 +30,17 @@ jobs:
         uses: google-github-actions/get-secretmanager-secrets@v2.2.3
         with:
           secrets: |-
-            tfvars:projects/594613974420/secrets/test-tf-vars-capstone-1
+            tfvars:${{ secrets.TF_VARS_MANAGER_URL }}
         
       -
         name: Create a tfvars file
         run: echo '${{ steps.secrets.outputs.tfvars}}' >> terraform.tfvars
         working-directory: core-tf
-      -
+  tf-configuration:
+    runs-on: self-hosted
+    needs: [checkout]
+    steps:
+      -    
         name: Install terraform
         uses: hashicorp/setup-terraform@v3.1.2
         with:
@@ -48,10 +52,28 @@ jobs:
         run: terraform init -input=false
         working-directory: core-tf
       -
+        name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4.1.1
+
+      -
+        name: Init TFLint
+        run: tflint --init
+        working-directory: core-tf
+
+      -
+        name: Run TFLint
+        run: tflint -f compact
+        working-directory: core-tf
+      -
         name: Terraform Validate
         id: validate
         run: terraform validate -no-color
         working-directory: core-tf
+      
+  tf-plan:
+    runs-on: self-hosted
+    needs: [tf-configuration]
+    steps:
       -
         name: Terraform Plan
         id: plan
@@ -59,7 +81,11 @@ jobs:
         working-directory: core-tf
         continue-on-error: true
       
-
+  tf-apply:
+    runs-on: self-hosted
+    needs: [tf-plan]
+    environment: development
+    steps:
       -
         name: Terraform Apply
         id: apply
@@ -67,6 +93,11 @@ jobs:
         working-directory: core-tf
         continue-on-error: true
 
+  tf-destroy:
+    runs-on: self-hosted
+    needs: [tf-apply]
+    environment: development
+    steps:
       -
         name: Terraform Destroy
         id: destroy
