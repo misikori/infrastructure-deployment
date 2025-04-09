@@ -31,7 +31,11 @@ jobs:
         with:
           secrets: |-
             tfvars:projects/594613974420/secrets/test-tf-vars-capstone-1
-          
+        
+      -
+        name: Create a tfvars file
+        run: echo ${{ steps.secrets.outputs.tfvars}} >> terraform.tfvars
+        working-directory: core-tf
       -
         name: Install terraform
         uses: hashicorp/setup-terraform@v3.1.2
@@ -49,7 +53,7 @@ jobs:
       -
         name: Terraform Plan
         id: plan
-        run: terraform plan -no-color -input=false -var-file='${{ steps.secrets.outputs.tfvars }}'
+        run: terraform plan -no-color -input=false -var-file=terraform.tfvars
         working-directory: core-tf
         continue-on-error: true
       
