@@ -75,6 +75,8 @@ jobs:
     needs: [tf-configuration]
     steps:
       -
+        uses: hashicorp/setup-terraform@v3.1.2
+      -
         name: Terraform Plan
         id: plan
         run: terraform plan -no-color -input=false -var-file=terraform.tfvars
@@ -87,6 +89,8 @@ jobs:
     environment: development
     steps:
       -
+        uses: hashicorp/setup-terraform@v3.1.2
+      -
         name: Terraform Apply
         id: apply
         run: terraform apply -auto-approve
@@ -98,6 +102,8 @@ jobs:
     needs: [tf-apply]
     environment: development
     steps:
+      -
+        uses: hashicorp/setup-terraform@v3.1.2
       -
         name: Terraform Destroy
         id: destroy
