@@ -34,7 +34,7 @@ jobs:
         
       -
         name: Create a tfvars file
-        run: echo ${{ steps.secrets.outputs.tfvars}} >> terraform.tfvars
+        run: echo '${{ steps.secrets.outputs.tfvars}}' >> terraform.tfvars
         working-directory: core-tf
       -
         name: Install terraform
