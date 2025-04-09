@@ -57,9 +57,6 @@ jobs:
         working-directory: core-tf
         continue-on-error: true
       
-      - run: echo ${{ steps.plan.outputs.stdout }}
-      - run: echo ${{ steps.plan.outputs.stderr }}
-      - run: echo ${{ steps.plan.outputs.exitcode }}
 
       -
         name: Terraform Apply
