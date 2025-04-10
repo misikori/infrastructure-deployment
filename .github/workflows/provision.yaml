@@ -1,7 +1,11 @@
 name: Manual trigger for provisioning core infrastructure
 on:
   workflow_dispatch:
-
+    inputs:
+      environment:
+        description: "Environment"
+        required: true
+        type: environment
 jobs:
   setup-gcli:
     runs-on: self-hosted
