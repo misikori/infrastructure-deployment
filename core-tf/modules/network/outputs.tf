@@ -17,3 +17,11 @@ output "subnets_regions" {
   description = "The region where subnets will be created"
   value = [ for subnet in google_compute_subnetwork.subnetwork : subnet.region]
 }
+
+output "network_id" {
+  value = google_compute_network.vpc.id
+}
+
+output "subnet_id" {
+  value = [ for subnet in google_compute_subnetwork.subnetwork : subnet.id]
+}

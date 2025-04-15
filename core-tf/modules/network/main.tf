@@ -11,4 +11,15 @@ resource "google_compute_subnetwork" "subnetwork" {
   network = google_compute_network.vpc.name
   region = each.value.region
   ip_cidr_range = each.value.ip_cidr_range
+  
+  secondary_ip_range {
+    range_name = each.value.pods_range_name
+    ip_cidr_range = each.value.pods_range_cidr
+  }
+
+  secondary_ip_range {
+    range_name = each.value.services_range_name
+    ip_cidr_range = each.value.services_range_cidr
+  }
+  
 }
