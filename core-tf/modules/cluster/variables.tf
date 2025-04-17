@@ -15,7 +15,7 @@ variable "subnetwork" {
 }
 
 variable "cluster_secondary_range_name" {
-  type = string
+  type        = string
   description = "the name of the existing secondary range to use for pod addresses"
 }
 
@@ -24,17 +24,17 @@ variable "services_secondary_range_name" {
 }
 
 variable "np_name" {
-  type = string
+  type        = string
   description = "Custom node pool name"
 }
 
 variable "machine_type" {
-  type = string
+  type    = string
   default = "e2-medium"
 }
 
 variable "image_type" {
-  type = string
+  type    = string
   default = "COS_CONTAINERD"
 }
 
@@ -43,19 +43,19 @@ variable "service_account" {
 }
 
 variable "total_min_node_count" {
-  type = number
+  type        = number
   description = "Min number of nodes in the Node pool"
-  default = 2
+  default     = 3
 }
 
 variable "total_max_node_count" {
-  type = number
+  type        = number
   description = "Max number of nodes in the Node pool"
-  default = 4
+  default     = 6
 }
 
 variable "max_pods_per_node" {
-  type = number
+  type    = number
   default = 10
 }
 
