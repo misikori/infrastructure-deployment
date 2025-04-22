@@ -62,3 +62,32 @@ variable "max_pods_per_node" {
 variable "project_id" {
   type = string
 }
+
+variable "enable_private_nodes" {
+  type    = bool
+  default = true
+}
+
+variable "enable_private_endpoint" {
+  type    = bool
+  default = true
+}
+
+# variable "whitelist" {
+#   type = list(
+#     object({
+#       cidr_block = string
+#       cidr_name  = string
+#     })
+#   )
+# }
+
+variable "dns_external_traffic" {
+  type = bool
+  default = false
+}
+
+variable "ip_endpoint_enabled" {
+  type = bool
+  default = false
+}

@@ -54,3 +54,7 @@ variable "target_name" {
 variable "api_version" {
   type = string
 }
+
+variable "runner_name" {
+  type = string
+}

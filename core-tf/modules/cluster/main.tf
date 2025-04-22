@@ -22,6 +22,29 @@ resource "google_container_cluster" "primary" {
   cluster_autoscaling {
     enabled = false
   }
+
+  private_cluster_config {
+    enable_private_nodes    = var.enable_private_nodes
+    enable_private_endpoint = var.enable_private_endpoint
+
+  }
+
+  control_plane_endpoints_config {
+    dns_endpoint_config {
+      allow_external_traffic = var.dns_external_traffic
+    }
+
+    ip_endpoints_config {
+      enabled = var.ip_endpoint_enabled
+    }
+  }
+
+  # master_authorized_networks_config {
+  #   cidr_blocks {
+  #     cidr_block   = var.whitelist[0].cidr_block
+  #     display_name = var.whitelist[0].cidr_name
+  #   }
+  # }
 }
 
 resource "google_container_node_pool" "primary-np" {

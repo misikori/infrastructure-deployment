@@ -15,6 +15,7 @@ module "cluster" {
   cluster_location              = var.location
   cluster_name                  = var.cluster_name
   service_account               = var.service_account
+  
 }
 
 data "google_client_config" "default" {
@@ -28,11 +29,12 @@ data "google_container_cluster" "default" {
 }
 
 provider "kubernetes" {
-  host  = "https://${data.google_container_cluster.default.endpoint}"
+  # config_path = "~/.kube/config"
+  host  = "https://${module.cluster.dns_endpoint}"
   token = data.google_client_config.default.access_token
-  cluster_ca_certificate = base64decode(
-    data.google_container_cluster.default.master_auth.0.cluster_ca_certificate,
-  )
+  # cluster_ca_certificate = base64decode(
+  #   data.google_container_cluster.default.master_auth.0.cluster_ca_certificate,
+  # )
 }
 
 module "hpa" {
