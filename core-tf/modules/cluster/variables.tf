@@ -83,11 +83,11 @@ variable "enable_private_endpoint" {
 # }
 
 variable "dns_external_traffic" {
-  type = bool
-  default = false
+  type    = bool
+  default = true
 }
 
 variable "ip_endpoint_enabled" {
-  type = bool
+  type    = bool
   default = false
 }

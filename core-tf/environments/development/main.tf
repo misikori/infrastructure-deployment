@@ -15,7 +15,7 @@ module "cluster" {
   cluster_location              = var.location
   cluster_name                  = var.cluster_name
   service_account               = var.service_account
-  
+
 }
 
 data "google_client_config" "default" {
@@ -43,4 +43,14 @@ module "hpa" {
   max_replicas = var.max_replicas
   target_name  = var.target_name
   api_version  = var.api_version
+}
+
+module "database" {
+  source               = "../../modules/database"
+  compute_address_name = var.compute_address_name
+  network_id           = module.vpc.network_id
+  network_self_link    = module.vpc.network_self_link
+  db_instance_name     = var.db_instance_name
+  database_name        = var.database_name
+  db_password          = var.db_password
 }

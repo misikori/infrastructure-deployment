@@ -55,6 +55,21 @@ variable "api_version" {
   type = string
 }
 
-variable "runner_name" {
+variable "compute_address_name" {
+  type    = string
+  default = "private-ip-address"
+}
+
+variable "db_instance_name" {
+  type    = string
+  default = "mobrenovic-private-instance"
+}
+
+variable "database_name" {
+  type    = string
+  default = "mobrenovic-petclinic"
+}
+
+variable "db_password" {
   type = string
 }
