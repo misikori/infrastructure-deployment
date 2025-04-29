@@ -5,3 +5,19 @@ auth_kind: serviceaccount
 service_account_file: ~/Downloads/capstone-updated-service-acc.json
 filters:
   - labels.ansible_target = true
+
+scopes:
+ - 'https://www.googleapis.com/auth/cloud-platform'
+ - 'https://www.googleapis.com/auth/compute.readonly'
+
+keyed_groups:
+  - prefix: aap
+    key: application
+    
+hostnames:
+  - name
+compose:
+  gcp_zone: zone
+  gcp_region: networkInterfaces[0].subnetwork.region
+  gcp_compute_ssh_flags: "--tunnel-through-iap --no-user-output-enabled --quiet"
+  gcp_compute_scp_flags: "--tunnel-through-iap --quiet"

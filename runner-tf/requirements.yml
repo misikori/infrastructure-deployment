@@ -1,0 +1,5 @@
+---
+roles:
+  - name: githubixx.kubectl
+    src: https://github.com/githubixx/ansible-role-kubectl.git
+    version: 23.3.0+1.31.5

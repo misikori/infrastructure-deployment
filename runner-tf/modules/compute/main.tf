@@ -3,7 +3,7 @@ data "google_service_account" "myaccount" {
 }
 
 resource "google_compute_instance" "vm" {
-  name = var.vm_name
+  name         = var.vm_name
   machine_type = var.machine_type
   boot_disk {
     initialize_params {
@@ -12,19 +12,19 @@ resource "google_compute_instance" "vm" {
   }
 
   network_interface {
-    network = "default"
-    # network = var.network_name
-    # subnetwork = var.subnetwork_name
-    access_config {
-      
-    }
+    # network = "default"
+    network = var.network_name
+    subnetwork = var.subnetwork_name
+    # access_config {
+
+    # }
   }
 
   allow_stopping_for_update = true
 
   labels = {
     "ansible_target" = "true"
-    "action_runner" = "true"
+    "action_runner"  = "true"
   }
 
   metadata = {
@@ -32,7 +32,7 @@ resource "google_compute_instance" "vm" {
   }
 
   service_account {
-    email = data.google_service_account.myaccount.email
-    scopes = [ "cloud-platform" ]
+    email  = data.google_service_account.myaccount.email
+    scopes = ["cloud-platform"]
   }
 }
