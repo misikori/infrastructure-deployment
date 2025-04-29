@@ -6,8 +6,8 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket = "obrenovicm-capstone-bucket"
-    prefix = "production/tf"
+    bucket             = "obrenovicm-capstone-bucket"
+    prefix             = "production/tf"
     kms_encryption_key = ""
   }
 }
@@ -15,5 +15,5 @@ terraform {
 provider "google" {
   project = var.project_id
   region  = "europe-west1"
-  zone = "europe-west1-b"
+  zone    = "europe-west1-b"
 }

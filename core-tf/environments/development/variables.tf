@@ -73,3 +73,7 @@ variable "database_name" {
 variable "db_password" {
   type = string
 }
+
+variable "repository_id" {
+  type = string
+}

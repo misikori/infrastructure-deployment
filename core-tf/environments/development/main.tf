@@ -54,3 +54,9 @@ module "database" {
   database_name        = var.database_name
   db_password          = var.db_password
 }
+
+module "gar" {
+  source = "../../modules/artifact-registry"
+  location = var.location
+  repository_id = var.repository_id
+}
