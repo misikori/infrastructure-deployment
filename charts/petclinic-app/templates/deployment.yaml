@@ -13,11 +13,16 @@ spec:
     metadata:
       labels:
         app: {{ .Values.pod.label }}
+
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
         - name: {{ .Values.container.name }}
           image: {{ .Values.container.image }}
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
           - name: CLOUD_SQL_DB_NAME
             value: {{ .Values.container.env.cloudSqlDbName }}
