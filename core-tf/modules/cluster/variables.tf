@@ -56,7 +56,7 @@ variable "total_max_node_count" {
 
 variable "max_pods_per_node" {
   type    = number
-  default = 10
+  default = 20
 }
 
 variable "project_id" {

@@ -77,3 +77,7 @@ variable "db_password" {
 variable "repository_id" {
   type = string
 }
+
+variable "gar_location" {
+  type = string
+}

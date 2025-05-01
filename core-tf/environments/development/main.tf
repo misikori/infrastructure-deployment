@@ -57,6 +57,6 @@ module "database" {
 
 module "gar" {
   source = "../../modules/artifact-registry"
-  location = var.location
+  location = var.gar_location
   repository_id = var.repository_id
 }
