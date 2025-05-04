@@ -14,6 +14,12 @@ terraform {
       version = "6.32.0"
     }
   }
+
+    backend "gcs" {
+    bucket             = "obrenovicm-capstone-bucket"
+    prefix             = "dev/tf"
+    kms_encryption_key = ""
+  }
 }
 
 provider "google" {
