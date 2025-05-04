@@ -5,7 +5,19 @@ on:
       environment:
         description: "Environment"
         required: true
-        type: environment
+        type: choice
+        options:
+          - development
+          - production
+
+      action:
+          description: "Action to execute, wheter it is apply or delete"
+          required: true
+          type: choice
+          options:
+            - apply
+            - destroy
+
 jobs:
   setup-gcli:
     runs-on: self-hosted
@@ -35,11 +47,18 @@ jobs:
         with:
           secrets: |-
             tfvars:${{ secrets.TF_VARS_MANAGER_URL }}
+            kms_key:${{ secrets.SECRET_MANAGER_URL }}/kms_key
         
       -
         name: Create a tfvars file
         run: echo '${{ steps.secrets.outputs.tfvars}}' >> terraform.tfvars
-        working-directory: core-tf
+        working-directory: core-tf/environments/${{ inputs.environment }}
+
+      -
+        name: Create a backend config with kms key
+        run: echo 'kms_encryption_key:${{ steps.secrets.outputs.kms_key }}' >> key.config
+        working-directory: core-tf/environments/${{ inputs.environment }}
+
   tf-configuration:
     runs-on: self-hosted
     needs: [checkout]
@@ -53,8 +72,8 @@ jobs:
       -
         name: Terraform Init
         id: init
-        run: terraform init -input=false
-        working-directory: core-tf
+        run: terraform init -input=false -backend-config='key.config'
+        working-directory: core-tf/environment/${{ inputs.environment }}
       -
         name: Setup TFLint
         uses: terraform-linters/setup-tflint@v4.1.1
@@ -62,17 +81,17 @@ jobs:
       -
         name: Init TFLint
         run: tflint --init
-        working-directory: core-tf
+        working-directory: core-tf/environment/${{ inputs.environment }}
 
       -
         name: Run TFLint
         run: tflint -f compact --minimum-failure-severity=error
-        working-directory: core-tf
+        working-directory: core-tf/environment/${{ inputs.environment }}
       -
         name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-        working-directory: core-tf
+        working-directory: core-tf/environment/${{ inputs.environment }}
       
   tf-plan:
     runs-on: self-hosted
@@ -84,13 +103,14 @@ jobs:
         name: Terraform Plan
         id: plan
         run: terraform plan -no-color -input=false -var-file=terraform.tfvars
-        working-directory: core-tf
+        working-directory: core-tf/environment/${{ inputs.environment }}
         continue-on-error: true
       
   tf-apply:
     runs-on: self-hosted
     needs: [tf-plan]
-    environment: development
+    if: inputs.action == 'apply'
+    # environment: ${{ inputs.environment }}
     steps:
       -
         uses: hashicorp/setup-terraform@v3.1.2
@@ -98,13 +118,13 @@ jobs:
         name: Terraform Apply
         id: apply
         run: terraform apply -auto-approve
-        working-directory: core-tf
+        working-directory: core-tf/environment/${{ inputs.environment }}
         continue-on-error: true
 
   tf-destroy:
     runs-on: self-hosted
-    needs: [tf-apply]
-    environment: development
+    if: inputs.action == 'destroy'
+    # environment: ${{ inputs.environment }}
     steps:
       -
         uses: hashicorp/setup-terraform@v3.1.2
@@ -112,4 +132,4 @@ jobs:
         name: Terraform Destroy
         id: destroy
         run: terraform destroy -auto-approve
-        working-directory: core-tf
+        working-directory: core-tf/environment/${{ inputs.environment }}
