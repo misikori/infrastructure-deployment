@@ -11,7 +11,7 @@ on:
           - production
 
       action:
-          description: "Action to execute, wheter it is apply or delete"
+          description: "Action to execute : [apply or destroy]"
           required: true
           type: choice
           options:
