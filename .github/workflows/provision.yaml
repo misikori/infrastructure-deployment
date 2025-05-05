@@ -59,6 +59,10 @@ jobs:
         run: echo "kms_encryption_key:${{ steps.secrets.outputs.kms_key }}" >> key.config
         working-directory: core-tf/environments/${{ inputs.environment }}
 
+      -
+        name: Setup Docker (req. for some actions)
+        uses: docker/setup-docker-action@v4
+
   tf-configuration:
     runs-on: self-hosted
     needs: [checkout]
@@ -69,9 +73,6 @@ jobs:
         with:
           terraform_wrapper: false
        
-      -
-        name: Setup Docker (req. for some actions)
-        uses: docker/setup-buildx-action@v3
       -
         name: Terraform Init
         id: init
