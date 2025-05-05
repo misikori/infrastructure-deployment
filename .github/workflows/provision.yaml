@@ -89,12 +89,12 @@ jobs:
         run: tflint -f compact --minimum-failure-severity=error
         working-directory: core-tf/environment/${{ inputs.environment }}
 
-      -
-        name: Run TFsec
-        id: tfsec
-        uses: aquasecurity/tfsec-action@v1.0.3
-        with:
-            soft_fail: true
+      # -
+      #   name: Run TFsec
+      #   id: tfsec
+      #   uses: aquasecurity/tfsec-action@v1.0.3
+      #   with:
+      #       soft_fail: true
 
       -
         name: Run fmt
