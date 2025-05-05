@@ -71,7 +71,7 @@ jobs:
        
       -
         name: Setup Docker (req. for some actions)
-        uses: docker-practice/actions-setup-docker@master
+        uses: docker/setup-docker-action@v4
       -
         name: Terraform Init
         id: init
