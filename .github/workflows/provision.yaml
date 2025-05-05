@@ -74,7 +74,7 @@ jobs:
         name: Terraform Init
         id: init
         run: terraform init -input=false -backend-config='key.config'
-        working-directory: core-tf/environment/${{ inputs.environment }}
+        working-directory: core-tf/environments/${{ inputs.environment }}
       -
         name: Setup TFLint
         uses: terraform-linters/setup-tflint@v4.1.1
@@ -82,12 +82,12 @@ jobs:
       -
         name: Init TFLint
         run: tflint --init
-        working-directory: core-tf/environment/${{ inputs.environment }}
+        working-directory: core-tf/environments/${{ inputs.environment }}
 
       -
         name: Run TFLint
         run: tflint -f compact --minimum-failure-severity=error
-        working-directory: core-tf/environment/${{ inputs.environment }}
+        working-directory: core-tf/environments/${{ inputs.environment }}
 
       # -
       #   name: Run TFsec
@@ -100,12 +100,12 @@ jobs:
         name: Run fmt
         id: fmt
         run: terraform fmt -recursive
-        working-directory: core-tf/environment/${{ inputs.environment }}
+        working-directory: core-tf/environments/${{ inputs.environment }}
       -
         name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-        working-directory: core-tf/environment/${{ inputs.environment }}
+        working-directory: core-tf/environments/${{ inputs.environment }}
       
   tf-plan:
     runs-on: self-hosted
@@ -117,7 +117,7 @@ jobs:
         name: Terraform Plan
         id: plan
         run: terraform plan -no-color -input=false -var-file=terraform.tfvars
-        working-directory: core-tf/environment/${{ inputs.environment }}
+        working-directory: core-tf/environments/${{ inputs.environment }}
         continue-on-error: true
       
   tf-apply:
@@ -132,7 +132,7 @@ jobs:
         name: Terraform Apply
         id: apply
         run: terraform apply -auto-approve
-        working-directory: core-tf/environment/${{ inputs.environment }}
+        working-directory: core-tf/environments/${{ inputs.environment }}
         continue-on-error: true
 
   tf-destroy:
@@ -146,4 +146,4 @@ jobs:
         name: Terraform Destroy
         id: destroy
         run: terraform destroy -auto-approve
-        working-directory: core-tf/environment/${{ inputs.environment }}
+        working-directory: core-tf/environments/${{ inputs.environment }}
