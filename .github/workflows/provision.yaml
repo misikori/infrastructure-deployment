@@ -56,7 +56,7 @@ jobs:
 
       -
         name: Create a backend config with kms key
-        run: echo kms_encryption_key="${{ steps.secrets.outputs.kms_key }}" >> key.config
+        run: echo kms_encryption_key=\"${{ steps.secrets.outputs.kms_key }}\" >> key.config
         working-directory: core-tf/environments/${{ inputs.environment }}
 
 
