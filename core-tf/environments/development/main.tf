@@ -55,8 +55,8 @@ module "database" {
   db_password          = var.db_password
 }
 
-module "gar" {
-  source = "../../modules/artifact-registry"
-  location = var.gar_location
-  repository_id = var.repository_id
-}
+# module "gar" {
+#   source = "../../modules/artifact-registry"
+#   location = var.gar_location
+#   repository_id = var.repository_id
+# }
