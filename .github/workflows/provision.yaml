@@ -56,12 +56,15 @@ jobs:
 
       -
         name: Create a backend config with kms key
-        run: echo "kms_encryption_key:${{ steps.secrets.outputs.kms_key }}" >> key.config
+        run: echo kms_encryption_key:"${{ steps.secrets.outputs.kms_key }}" >> key.config
         working-directory: core-tf/environments/${{ inputs.environment }}
 
       -
         name: Setup Docker (req. for some actions)
-        uses: docker/setup-docker-action@v4
+        uses: docker/setup-docker-action@v4.3.0
+        with:
+          version: type=archive,version=27.4.0,channel=stable
+          rootless: true
 
   tf-configuration:
     runs-on: self-hosted
