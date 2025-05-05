@@ -73,7 +73,7 @@ jobs:
       -
         name: Terraform Init
         id: init
-        run: terraform init -input=false -backend-config='key.config'
+        run: terraform init -input=false -backend-config='key.config' -upgrade
         working-directory: core-tf/environments/${{ inputs.environment }}
       -
         name: Setup TFLint
