@@ -29,7 +29,7 @@ resource "google_sql_database_instance" "db_instance" {
   }
 
   depends_on          = [google_service_networking_connection.private_vpc_connection]
-  deletion_protection = false # set to true later.
+  deletion_protection = true
 }
 
 resource "google_sql_database" "database" {
