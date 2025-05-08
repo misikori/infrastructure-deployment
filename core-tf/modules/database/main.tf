@@ -35,6 +35,7 @@ resource "google_sql_database_instance" "db_instance" {
 resource "google_sql_database" "database" {
   name     = var.database_name
   instance = google_sql_database_instance.db_instance.name
+  deletion_policy = "ABANDON"
 }
 
 resource "google_sql_user" "user" {
