@@ -11,12 +11,13 @@ scopes:
  - 'https://www.googleapis.com/auth/compute.readonly'
 
 keyed_groups:
-  - prefix: aap
-    key: application
+  - prefix: zone
+    key: zone
     
-hostnames:
-  - name
+# hostnames:
+  # - name
 compose:
+  ansible_host: name
   gcp_zone: zone
   gcp_region: networkInterfaces[0].subnetwork.region
   gcp_compute_ssh_flags: "--tunnel-through-iap --no-user-output-enabled --quiet"
