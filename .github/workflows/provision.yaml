@@ -95,6 +95,7 @@ jobs:
         uses: aquasecurity/tfsec-action@v1.0.3
         with:
             soft_fail: true
+            working_directory: "core-tf/environments/${{ inputs.environment }}"
 
       -
         name: Run fmt
