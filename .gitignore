@@ -38,3 +38,5 @@ terraform.rc
 values.yaml
 __pycache__
 **/*.config
+**/*.tgz
+**/*.lock

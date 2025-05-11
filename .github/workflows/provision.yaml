@@ -46,8 +46,8 @@ jobs:
         uses: google-github-actions/get-secretmanager-secrets@v2.2.3
         with:
           secrets: |-
-            tfvars:${{ secrets.SECRET_MANAGER_URL }}/tf-${{ inputs.environment }}-vars
-            kms_key:${{ secrets.SECRET_MANAGER_URL }}/kms_key
+            tfvars:${{ secrets.SECRET_MANAGER }}/tf-${{ inputs.environment }}-vars
+            kms_key:${{ secrets.SECRET_MANAGER }}/kms_key
         
       -
         name: Create a tfvars file
@@ -63,6 +63,7 @@ jobs:
   tf-configuration:
     runs-on: self-hosted
     needs: [checkout]
+    if: inputs.action == 'apply'
     steps:
       -    
         name: Install terraform
@@ -132,7 +133,12 @@ jobs:
       -
         name: Terraform Apply
         id: apply
-        run: terraform apply -auto-approve
+        run: |
+          terraform apply -auto-approve \
+          -target=module.cluster \
+          -target=module.database.google_sql_user.user \
+          -target=module.hpa \
+          -target=module.vpc.google_compute_subnetwork.subnetwork
         working-directory: core-tf/environments/${{ inputs.environment }}
         continue-on-error: true
 
@@ -146,5 +152,5 @@ jobs:
       -
         name: Terraform Destroy
         id: destroy
-        run: terraform destroy -auto-approve
+        run: terraform destroy -auto-approve # add targets
         working-directory: core-tf/environments/${{ inputs.environment }}
