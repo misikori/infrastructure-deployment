@@ -145,6 +145,7 @@ jobs:
   tf-destroy:
     runs-on: self-hosted
     if: inputs.action == 'destroy'
+    needs: [tf-plan]
     # environment: ${{ inputs.environment }}
     steps:
       -
