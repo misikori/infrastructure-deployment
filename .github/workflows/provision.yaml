@@ -151,20 +151,9 @@ jobs:
         uses: hashicorp/setup-terraform@v3.1.2
 
       -
-        name: Terraform Init
-        id: init
-        run: terraform init -input=false -backend-config='key.config' -upgrade
-        working-directory: core-tf/environments/${{ inputs.environment }}
-        
-      -
         name: Terraform Destroy
         id: destroy
         run: |
-          terraform destroy -auto-approve \
-          -target=module.cluster.google_container_cluster.primary \
-          -target=module.cluster.google_container_node_pool.primary-np \ 
-          -target=module.database.google_sql_user.user \
-          -target=module.hpa.kubernetes_horizontal_pod_autoscaler_v2.hpa \
-          -target=module.vpc.google_compute_subnetwork.subnetwork
+          terraform destroy -auto-approve 
           
         working-directory: core-tf/environments/${{ inputs.environment }}
