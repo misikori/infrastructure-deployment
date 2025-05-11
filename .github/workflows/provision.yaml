@@ -145,11 +145,17 @@ jobs:
   tf-destroy:
     runs-on: self-hosted
     if: inputs.action == 'destroy'
-    needs: [tf-plan]
     # environment: ${{ inputs.environment }}
     steps:
       -
         uses: hashicorp/setup-terraform@v3.1.2
+
+      -
+        name: Terraform Init
+        id: init
+        run: terraform init -input=false -backend-config='key.config' -upgrade
+        working-directory: core-tf/environments/${{ inputs.environment }}
+        
       -
         name: Terraform Destroy
         id: destroy
