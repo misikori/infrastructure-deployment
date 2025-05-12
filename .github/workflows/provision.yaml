@@ -166,9 +166,9 @@ jobs:
         name: Terraform Destroy
         id: destroy
         run: |
-          terraform destroy
-          -target="module.cluster" \
-          -target="module.hpa" \
-          -auto-approve
+          terraform destroy -auto-approve \
+          -target="module.cluster.google_container_cluster.primary" \
+          -target="module.hpa.kubernetes_horizontal_pod_autoscaler_v2.hpa" \
+          -target="module.cluster.google_container_node_pool.primary-np"
           
         working-directory: core-tf/environments/${{ inputs.environment }}
