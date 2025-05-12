@@ -135,10 +135,10 @@ jobs:
         id: apply
         run: |
           terraform apply -auto-approve \
-          -target="module.cluster" \
+          -target="module.cluster.google_container_cluster.primary" \
+          -target="module.cluster.google_container_node_pool.primary-np" \
           -target="module.database.google_sql_user.user" \
-          -target="module.hpa" \
-          -target="module.vpc.google_compute_subnetwork.subnetwork"
+          -target="module.hpa" 
         working-directory: core-tf/environments/${{ inputs.environment }}
         continue-on-error: true
 
