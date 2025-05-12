@@ -166,8 +166,9 @@ jobs:
         name: Terraform Destroy
         id: destroy
         run: |
-          terraform destroy -auto-approve
-          -target=module.cluster \
-          -target=module.hpa \
+          terraform destroy
+          -target="module.cluster" \
+          -target="module.hpa" \
+          -auto-approve
           
         working-directory: core-tf/environments/${{ inputs.environment }}
