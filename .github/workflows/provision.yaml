@@ -157,9 +157,17 @@ jobs:
         working-directory: core-tf/environments/${{ inputs.environment }}
 
       -
+        name: Tf plan
+        run: terraform plan -no-color -input=false -var-file=terraform.tfvars
+        working-directory: core-tf/environments/${{ inputs.environment }}
+        continue-on-error: true
+
+      -
         name: Terraform Destroy
         id: destroy
         run: |
-          terraform destroy -auto-approve 
+          terraform destroy -auto-approve
+          -target=module.cluster \
+          -target=module.hpa \
           
         working-directory: core-tf/environments/${{ inputs.environment }}
