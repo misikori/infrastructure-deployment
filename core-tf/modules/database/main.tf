@@ -25,13 +25,13 @@ resource "google_sql_database_instance" "db_instance" {
       ipv4_enabled                                  = false
       private_network                               = var.network_self_link
       enable_private_path_for_google_cloud_services = true
-      
+
       # private service connect to runner.
       psc_config {
         psc_enabled = true
         allowed_consumer_projects = [ var.project_id ]
         psc_auto_connections {
-          consumer_network = "projects/${var.project_id}/global/networks/${psc_network}"
+          consumer_network = "projects/${var.project_id}/global/networks/${var.psc_network}"
         }
       }
     }
