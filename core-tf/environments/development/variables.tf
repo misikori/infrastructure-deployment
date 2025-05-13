@@ -66,8 +66,9 @@ variable "db_instance_name" {
 }
 
 variable "database_name" {
-  type    = string
-  default = "mobrenovic-petclinic"
+  type = string
+  # default = "mobrenovic-petclinic"
+  default = "example-db"
 }
 
 variable "db_password" {
@@ -79,5 +80,17 @@ variable "repository_id" {
 }
 
 variable "gar_location" {
+  type = string
+}
+
+variable "region" {
+  type = string
+}
+
+variable "psc_network" {
+  type = string
+}
+
+variable "psc_subnetwork" {
   type = string
 }

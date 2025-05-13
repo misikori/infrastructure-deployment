@@ -25,6 +25,15 @@ resource "google_sql_database_instance" "db_instance" {
       ipv4_enabled                                  = false
       private_network                               = var.network_self_link
       enable_private_path_for_google_cloud_services = true
+      
+      # private service connect to runner.
+      psc_config {
+        psc_enabled = true
+        allowed_consumer_projects = [ var.project_id ]
+        psc_auto_connections {
+          consumer_network = "projects/${var.project_id}/global/networks/${psc_network}"
+        }
+      }
     }
   }
 
@@ -43,4 +52,22 @@ resource "google_sql_user" "user" {
   instance    = google_sql_database_instance.db_instance.name
   password_wo = var.db_password
   host = "%"
+}
+
+
+resource "google_compute_address" "default" {
+  name         = "psc-compute-address-${google_sql_database_instance.db_instance.name}"
+  region       = var.region
+  address_type = "INTERNAL"
+  subnetwork   = var.psc_subnetwork
+}
+
+
+resource "google_compute_forwarding_rule" "default" {
+  name = "psc-forwarding-rule-${google_sql_database_instance.db_instance.name}"
+  region = var.region
+  network = var.psc_network
+  ip_address = google_compute_address.default.self_link
+  load_balancing_scheme = ""
+  target = google_sql_database_instance.db_instance.psc_service_attachment_link
 }

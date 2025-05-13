@@ -15,7 +15,7 @@ terraform {
     }
   }
 
-    backend "gcs" {
+  backend "gcs" {
     bucket             = "obrenovicm-capstone-bucket"
     prefix             = "dev/tf"
     kms_encryption_key = ""

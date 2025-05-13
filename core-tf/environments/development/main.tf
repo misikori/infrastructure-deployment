@@ -53,6 +53,10 @@ module "database" {
   db_instance_name     = var.db_instance_name
   database_name        = var.database_name
   db_password          = var.db_password
+  project_id           = var.project_id
+  region               = var.region
+  psc_network          = var.psc_network
+  psc_subnetwork       = var.psc_subnetwork
 }
 
 # module "gar" {

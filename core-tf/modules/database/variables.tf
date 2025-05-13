@@ -42,3 +42,19 @@ variable "db_user" {
 variable "db_password" {
   type = string
 }
+
+variable "project_id" {
+  type = string
+}
+
+variable "region" {
+  type = string
+}
+
+variable "psc_network" {
+  type = string
+}
+
+variable "psc_subnetwork" {
+  type = string
+}
