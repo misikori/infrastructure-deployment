@@ -59,8 +59,8 @@ module "database" {
   psc_subnetwork       = var.psc_subnetwork
 }
 
-# module "gar" {
-#   source = "../../modules/artifact-registry"
-#   location = var.gar_location
-#   repository_id = var.repository_id
-# }
+module "gar" {
+  source = "../../modules/artifact-registry"
+  location = var.gar_location
+  repository_id = var.repository_id
+}
