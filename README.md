@@ -9,7 +9,7 @@ High-level summary: this repo contains the full infrastructure-as-code stack for
   CI/CD pipelines that automate infrastructure deployment and configuration.
 
 - **`core-tf/`**  
-  Terraform modules and configurations for backbone infrastructure.
+  Terraform modules and configurations for backbone infrastructure with support for multiple environments.
 
 - **`runner-tf/`**  
   Terraform configuration for provisioning GitHub Actions self-hosted runner and following Ansible playbook.
